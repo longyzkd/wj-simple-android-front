@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tabs - jQuery Mobile Demos</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../css/themes/default/yzsl.css">
+	<link rel="stylesheet" href="../css/themes/default/jquery.mobile.icons-1.4.5.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<link rel="stylesheet" href="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.css">
+	<link rel="stylesheet" href="../css/my.css">
+
+	<script src="../js/jquery.js"></script>
+	<script src="../_assets/js/index.js"></script>
+	<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="../js/common.js"></script>
+
+</head>
+<body>
+<div data-role="page"  data-quicklinks="true">
+
+	<!--<div data-role="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
+		&lt;!&ndash;<p><span class="jqm-version"></span> Demos</p>&ndash;&gt;
+		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
+		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	</div>&lt;!&ndash; /header &ndash;&gt;-->
+
+	<div data-role="header" data-position="fixed" >		
+		<h1 class="ui-title" tabindex="0" role="heading" aria-level="1">扬州水情</h1>
+
+       <!-- <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>-->
+	</div>
+
+	<div role="main" class="ui-content">
+        <ul data-role="listview" data-inset="true"  id='sq'>
+
+
+		</ul>
+
+    </div><!-- /content -->
+
+    <div data-role="footer"  data-position="fixed">
+		<div data-role="navbar" data-iconpos="left">
+			<ul>
+				<li><a href="index.html" data-icon="home" class="ui-btn-active"  rel="external">扬州水情</a></li>
+				<li><a href="zha.html" data-icon="eye"  rel="external">扬州闸</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+
+	<!-- 返回顶部 start -->
+	<div style="display:block;" class="back-to" id="toolBackTop">
+		<a title="返回顶部" onclick="window.scrollTo(0,0);return false;" href="#top" class="back-top"></a>
+	</div>
+	<!-- 返回顶部 end -->
+</div><!-- /page -->
+
+<script type="text/javascript">
+	setInterval(refresh, interval);
+	function refresh (){
+			renderOne();//水情数据
+	}
+		$(function() {
+
+			renderOne();
+		});
+
+		//扬州水情表报表数据
+	function loadData(result){
+		//alert(result);
+		if (result != undefined) {
+			//alert(result.success);
+			if(result.success){
+				var $tbody = $('#sq');
+				$tbody.html('');
+				var html = '';
+				for (var j = 0; j < result.obj.length; j ++) {
+					var cur = result.obj[j];
+					//浮点数保留四合五入两位小数
+
+
+					html += '<li data-role="list-divider">闸站名：'+(cur.zbmName?cur.zbmName:cur.zbmCode ) +'</li>';
+					html += '<li>';
+					html +=	'  <p>上水位：'+(cur.ssw==undefined?'-':cur.ssw.toFixed(2))+'</p>';
+					html +=	'  <p>下水位：'+(cur.xsw==undefined?'-':cur.xsw.toFixed(2))+'</p>';
+					html +=	'  <p>流量：'+(cur.ln==undefined?'-':cur.ln)+'</p>';
+					html +=	'  <p class="ui-li-aside"><strong>'+cur.tm+'</strong></p>';
+					html +='</li>';
+				}
+				$tbody.append(html)
+				.listview( "refresh" );
+			}else{
+				alert('出错了');
+			}
+
+		}
+	}
+
+
+
+	</script>
+</body>
+</html>

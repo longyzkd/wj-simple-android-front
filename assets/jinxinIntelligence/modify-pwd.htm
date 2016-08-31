@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<link rel="import" href="inc/inc.htm" >
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>注册</title>
+    <base href="."/>
+    <meta name="viewport"
+          content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" type="text/css" href="css/resets.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
+    <!-- inc-->
+    <script type="text/javascript" src="js/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../www/cordova.js"></script>
+    <script src="js/app/main.js"></script>
+
+    <script type="text/javascript" src="js/sonic.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/common.js" charset="utf-8"></script>
+    <script type="text/javascript" src="layer/layer.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/swiper.min.js" charset="utf-8"></script>
+
+
+    <!-- //inc -->
+</head>
+<body class="pb-65">
+
+<!-- header start -->
+<div class="common-head common-head-second  clearfix">
+    <a href="index.htm" class="btns-detail" style="float:left;">返回</a>
+    <h4>修改密码</h4>
+
+</div>
+<div class="top_div"></div>
+<!-- header end -->
+<!-- 登录表单 -->
+<form onsubmit="return false;">
+<input type='hidden' name='service_code' value='modifyPwd'>
+    <div class="form-bg form-bg-bottom clearfix">
+        <div class="form-group clearfix">
+            <label class="control-label label-width">原始密码</label>
+
+            <div class="group-right group-right-width">
+                <input type="password" class="form-control" id='oldPwd' placeholder="原始密码">
+                <a href="javascript:;" class="form-icons arrow-delete"></a>
+
+                <div class="input-border"></div>
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="control-label label-width">新密码</label>
+
+            <div class="group-right group-right-width">
+                <input type="password" class="form-control" placeholder="请输入密码" name='newPassword' id='pwd1'>
+                <!--这里会有两种提示，当input聚焦时是灰色小叉图案，当到下一项时显示绿色对勾图案-->
+                <!--<a href="javascript:;" class="form-icons arrow-delete"></a>-->
+                <a href="javascript:;" class="form-icons arrow-green-right"></a>
+
+                <div class="input-border"></div>
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="control-label label-width">确认密码</label>
+
+            <div class="group-right group-right-width">
+                <input type="password" class="form-control" placeholder="请再次输入密码" id='pwd2'>
+                <!--这里会有两种提示，当input聚焦时是灰色小叉图案，当到下一项时显示绿色对勾图案-->
+                <!--<a href="javascript:;" class="form-icons arrow-delete"></a>-->
+                <a href="javascript:;" class="form-icons arrow-green-right"></a>
+
+                <div class="input-border"></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-down clearfix">
+        <div class="form-group">
+            <!--当以上内容被编辑时添加btn-common-red类，按钮成为红色-->
+            <!--<button type="submit" class="btn  btn-gray ">登录</button>-->
+            <button onclick='save()' class="btn  btn-gray btn-common-red">修改密码</button>
+        </div>
+
+    </div>
+
+</form>
+
+
+<script src="js/md5.js"></script>
+<script type="text/javascript">
+
+
+window.onload = function(){
+	validUser();
+	$('form').append($('<input type="hidden" name="userId" />').val(userId));
+}
+	function save(){
+		if(validate()){
+ 		//	alert($('form').serialize())	; 
+//		  var url = saveDataUrl+"?"+encodeURI($('form').serialize());
+		  var url = host + "/base/appapi!doNotNeedSessionAndSecurity_updateClientPwd.do?"
+			+ "password=" + password+"&"+$('form').serialize();
+		  $.post(url, null, function(result) {
+			  redirectlogin(result);
+				}, 'json');
+		}
+	}
+	function redirectlogin(result){
+		if(result.success){
+			
+		layer.open({
+				content : "修改成功",
+				icon : 1,
+				closeBtn : 0,
+				yes : function(index, layero) {
+					if(sessionInfo != ""){
+						sessionInfo.pwd = $('#pwd1').val();
+						setUserInfo(sessionInfo);
+					}
+					
+					layer.close(index);
+					var url = 'index.htm';
+					location.href = url;
+				}
+			});
+
+		} else {
+			layer.alert(result.msg, {
+				icon : 0
+			});
+			//alert(result.msg);	
+		}
+	}
+
+	function validate() {
+		if ($('#oldPwd').val()) {
+			if ($('#oldPwd').val() != password) {
+				//alert('请输入正确的密码');
+				layer.alert('请输入正确的密码', {
+					icon : 0
+				});
+				return false;
+			}
+		} else {
+			//alert('请输入原始密码');
+			layer.alert('请输入原始密码', {
+				icon : 0
+			});
+			return false;
+		}
+
+		if ($('#pwd1').val() && $('#pwd2').val()) {
+			if ($('#pwd1').val() != $('#pwd2').val()) {
+				//alert('两次密码输入不一致');
+				layer.alert('两次密码输入不一致', {
+					icon : 0
+				});
+				//$('#pwd1').val(''); 
+				//$('#pwd2').val(''); 
+				return false;
+			}
+		} else {
+			//alert('请输入新密码');
+			layer.alert('请输入新密码', {
+				icon : 0
+			});
+			return false;
+		}
+		return true;
+
+	}
+</script>
+</body>
+
+</html>

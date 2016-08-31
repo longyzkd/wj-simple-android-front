@@ -1,0 +1,38 @@
+/* ���ض��� */
+.back-to {
+    bottom: 40px;
+    overflow: hidden;
+    position: fixed;
+    right: 10px;
+    width: 39px;
+    z-index: 999;
+}
+
+.back-to .back-top {
+    background: url("images/top.png") no-repeat 0 0;
+    -webkit-background-size: 39px;
+    background-size: 39px;
+    display: block;
+    float: right;
+    width: 39px;
+    height: 39px;
+    outline: 0 none;
+    text-indent: -9999em;
+}
+
+
+
+
+.ui-icon-yzzsw {background:url('images/sw.png') no-repeat 0 0;}
+
+.ui-icon-myicon:after {
+           background-image: url("img/sw.png");  /**你的图片，路径是相对于当前使用文件可以访问到的*/
+           background-size: 18px 18px;
+           border-radius: 0; /*图标形态，0=方形，不设置就是默认的圆形*/
+}
+
+.ui-icon-myicon .ui-icon
+{
+background:  url("img/sw.png")50% 50% no-repeat;
+background-size: 18px 26px;
+}

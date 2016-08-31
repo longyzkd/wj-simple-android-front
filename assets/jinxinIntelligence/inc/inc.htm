@@ -1,0 +1,24 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript">
+
+</script>
+<script type="text/javascript" src="js/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/jquery.cookie.js" charset="utf-8"></script>
+
+<script type="text/javascript" src="js/sonic.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="layer/layer.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/swiper.min.js" charset="utf-8"></script>
+
+
+
+<script type="text/javascript">
+	var cookie_user=$.cookie('userinfo');
+	var sessionInfo = "";
+	if(cookie_user != undefined && cookie_user != null &&  cookie_user != "" &&  cookie_user != "null" ){
+	
+		sessionInfo =  eval('(' + cookie_user + ')');
+	}
+</script>

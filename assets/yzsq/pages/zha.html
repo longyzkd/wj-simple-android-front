@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tabs - jQuery Mobile Demos</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" href="../css/themes/default/yzsl.css">
+	<link rel="stylesheet" href="../css/themes/default/jquery.mobile.icons-1.4.5.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<link rel="stylesheet" href="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.css">
+	<script src="../js/jquery.js"></script>
+	<script src="../_assets/js/index.js"></script>
+	<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="../js/common.js"></script>
+
+
+	<script src="http://cdn.rawgit.com/jquery/jquery-ui/1.10.4/ui/jquery.ui.datepicker.js"></script>
+	<script id="mobile-datepicker" src="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.js"></script>
+
+	<style id="">
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading {
+		margin: 0;
+		}
+
+		.ui-li-static.ui-collapsible {
+		padding: 0;
+		}
+
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading > .ui-btn {
+		border-top-width: 0;
+		}
+
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-btn,
+		.ui-li-static.ui-collapsible > .ui-collapsible-content {
+		border-bottom-width: 0;
+		}
+	</style>
+</head>
+<body>
+<div data-role="page"  data-quicklinks="true">
+
+	<!--<div data-role="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
+		&lt;!&ndash;<p><span class="jqm-version"></span> Demos</p>&ndash;&gt;
+		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
+		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	</div>&lt;!&ndash; /header &ndash;&gt;-->
+
+	<div data-role="header" data-position="fixed" >
+		<h1 class="ui-title" tabindex="0" role="heading" aria-level="1">扬州闸</h1>
+
+       <!-- <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>-->
+	</div>
+
+	<div role="main" class="ui-content ">
+
+
+		  <ul data-role="listview" data-inset="true">
+                    <li><a href="zha_sw.html"  rel="external"><img src="../css/images/sw.png" alt="Germany" class="ui-li-icon">扬州闸水位信息</a></li>
+                    <li><a href="zha_kd.html" rel="external"><img src="../css/images/hourglass.png" alt="Germany" class="ui-li-icon">扬州闸开度信息</a></li>
+                    <li><a href="zha_dl.html"  rel="external"><img src="../css/images/lightning.png" alt="Great Britain" class="ui-li-icon">扬州闸电压信息</a></li>
+                    <li><a href="zha_his.html"  rel="external"><img src="../css/images/zoom.png" alt="Finland" class="ui-li-icon">扬州闸记录查询</a></li>
+                </ul>
+
+
+
+
+	</div><!-- /content -->
+
+    <div data-role="footer"  data-position="fixed">
+		<div data-role="navbar" data-iconpos="left">
+			<ul>
+				<li><a href="index.html" data-icon="home" rel="external">扬州水情</a></li>
+				<li><a href="zha.html" data-icon="eye"  class="ui-btn-active" rel="external">扬州闸</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+	<!-- 返回顶部 start -->
+	<div style="display:block;" class="back-to" id="toolBackTop">
+		<a title="返回顶部" onclick="window.scrollTo(0,0);return false;" href="#top" class="back-top"></a>
+	</div>
+	<!-- 返回顶部 end -->
+
+	<!--<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<p>扬州金鑫 <span class="jqm-version"></span></p>
+	</div>--><!-- /footer -->
+
+
+
+</div><!-- /page -->
+
+
+</body>
+</html>

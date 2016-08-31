@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>智能开关</title>
+	<link rel="import" href="inc/inc.htm" >
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+<link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+<link rel="stylesheet" href="css/style_1.css" />
+
+
+<script src="assets/js/jquery.min.js"></script>
+<!--<script src="assets/js/syExtJquery.js"></script>-->
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="js/common.js"></script>
+
+	<!-- inc-->
+	<script type="text/javascript" src="js/jquery.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../www/cordova.js"></script>
+	<script src="js/app/main.js"></script>
+
+	<script type="text/javascript" src="js/sonic.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/common.js" charset="utf-8"></script>
+	<script type="text/javascript" src="layer/layer.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/swiper.min.js" charset="utf-8"></script>
+
+
+	<!-- //inc -->
+<style >
+	.am-header-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1010;
+}
+</style>
+<style>
+    .header {
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 200%;
+      color: #333;
+      margin-top: 30px;
+    }
+    .header p {
+      font-size: 14px;
+    }
+    body
+    {
+        color:#0E90D2;
+    }
+  </style>
+  
+</head>
+<body>
+<header data-am-widget="header"
+          class="am-header am-header-default am-header-fixed">
+      <div class="am-header-left am-header-nav" >
+          <a href="index.htm" class="" style="width:60px;">
+          	 <!-- <img class="am-header-icon-custom" src="data:image/svg+xml;charset=utf-8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 12 20&quot;&gt;&lt;path d=&quot;M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z&quot; fill=&quot;%23fff&quot;/&gt;&lt;/svg&gt;" alt=""/> -->
+              <span class="am-header-nav-title">
+               	 返回
+              </span>
+          </a>
+          
+      </div>
+
+      <h1 class="am-header-title">
+         	 智能开关
+      </h1>
+
+  </header>	
+	
+<div class="am-g">
+  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+    
+    <div class="am-g">
+	  <div class="am-u-sm-2" style="text-align:center;"><img  alt="" style=" height:70px;" src="images/drawable-hdpi/light1.jpg"></div>
+	  <div class="am-u-sm-5" style="text-align:center;"><h1 style="font-size:16px; margin-top:30px;">智能开关</h1></div>
+	  <div class="am-u-sm-5" style="text-align:center;">
+	  	<div class="switch demo3" style="margin-top:20px;">
+			<input type="checkbox" id="open1" onclick="isOpen(1);" >
+			<label><i></i></label>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="am-g">
+	  <div class="am-u-sm-2" style="text-align:center;"><img  alt="" style=" height:70px;" src="images/drawable-hdpi/light1.jpg"></div>
+	  <div class="am-u-sm-5" style="text-align:center;"><h1 style="font-size:16px; margin-top:30px;">智能开关</h1></div>
+	  <div class="am-u-sm-5" style="text-align:center;">
+	  	<div class="switch demo3" style="margin-top:20px;">
+			<input type="checkbox" id="open2" onclick="isOpen(2);" >
+			<label><i></i></label>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="am-g">
+	  <div class="am-u-sm-2" style="text-align:center;"><img  alt="" style=" height:70px;" src="images/drawable-hdpi/light1.jpg"></div>
+	  <div class="am-u-sm-5" style="text-align:center;"><h1 style="font-size:16px; margin-top:30px;">智能开关</h1></div>
+	  <div class="am-u-sm-5" style="text-align:center;">
+	  	<div class="switch demo3" style="margin-top:20px;">
+			<input type="checkbox" id="open3" onclick="isOpen(3);" >
+			<label><i></i></label>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="am-g">
+	  <div class="am-u-sm-2" style="text-align:center;"><img  alt="" style=" height:70px;" src="images/drawable-hdpi/light1.jpg"></div>
+	  <div class="am-u-sm-5" style="text-align:center;"><h1 style="font-size:16px; margin-top:30px;">智能开关</h1></div>
+	  <div class="am-u-sm-5" style="text-align:center;">
+	  	<div class="switch demo3" style="margin-top:20px;">
+			<input type="checkbox" id="open4" onclick="isOpen(4);" >
+			<label><i></i></label>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="am-g">
+	  <div class="am-u-sm-2" style="text-align:center;"><img  alt="" style=" height:70px;" src="images/drawable-hdpi/light1.jpg"></div>
+	  <div class="am-u-sm-5" style="text-align:center;"><h1 style="font-size:16px; margin-top:30px;">智能开关</h1></div>
+	  <div class="am-u-sm-5" style="text-align:center;">
+	  	<div class="switch demo3" style="margin-top:20px;">
+			<input type="checkbox" id="open5" onclick="isOpen(5);" >
+			<label><i></i></label>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="am-g">
+	  <div class="am-u-sm-2" style="text-align:center;"><img  alt="" style=" height:70px;" src="images/drawable-hdpi/light1.jpg"></div>
+	  <div class="am-u-sm-5" style="text-align:center;"><h1 style="font-size:16px; margin-top:30px;">智能开关</h1></div>
+	  <div class="am-u-sm-5" style="text-align:center;">
+	  	<div class="switch demo3" style="margin-top:20px;">
+			<input type="checkbox" id="open6" onclick="isOpen(6);" >
+			<label><i></i></label>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="am-g">
+	  <div class="am-u-sm-2" style="text-align:center;"><img  alt="" style=" height:70px;" src="images/drawable-hdpi/light1.jpg"></div>
+	  <div class="am-u-sm-5" style="text-align:center;"><h1 style="font-size:16px; margin-top:30px;">智能开关</h1></div>
+	  <div class="am-u-sm-5" style="text-align:center;">
+	  	<div class="switch demo3" style="margin-top:20px;">
+			<input type="checkbox" id="open7" onclick="isOpen(7);" >
+			<label><i></i></label>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="am-g">
+	  <div class="am-u-sm-2" style="text-align:center;"><img  alt="" style=" height:70px;" src="images/drawable-hdpi/light1.jpg"></div>
+	  <div class="am-u-sm-5" style="text-align:center;"><h1 style="font-size:16px; margin-top:30px;">智能开关</h1></div>
+	  <div class="am-u-sm-5" style="text-align:center;">
+	  	<div class="switch demo3" style="margin-top:20px;">
+			<input type="checkbox" id="open8" onclick="isOpen(8);" >
+			<label><i></i></label>
+		</div>
+	  </div>
+	</div>
+	
+	
+	
+  </div>
+</div>
+
+</body>
+<script>
+var clientDevID ;
+var dtfid ;
+var dataValue;
+var online;
+window.onload = function(){
+	clientDevID = getQueryString("clientDevID");
+	dtfid = getQueryString("dtfid");
+	dataValue = getQueryString("dataValue");
+	online = getQueryString("online");
+	validUser();
+	setInterval("onlineState()",10000);//1000为1秒钟
+	onlineState();
+	load();
+	
+	}
+	
+	function onlineState()
+	{
+		var url = host+"/base/appapi!doNotNeedSessionAndSecurity_sendDevFun.do?userId="+userId+"&password="+password+"&clientDevId="+clientDevID+"&dtfid="+418+"&dataValue=";
+		$.post(url, null, function(result) {
+			if(result.success){
+				
+			}
+			else{
+				layer.msg('设备没有连线');
+				
+				
+			}
+		}, 'json');
+		
+ 	}
+	
+	function load(){
+		if(dataValue != ''){
+			var switchState;
+			
+			for (var i=1;i<9;i++)
+			{
+				switchState = dataValue.substring(16-i,17-i);
+				if(switchState == 0){
+					$("#open"+i).attr("checked",false);
+				}else{
+					$("#open"+i).attr("checked",true);
+				}
+			}
+			
+			
+		}
+	}
+	
+	function isOpen(idx){
+		var check = $("#open"+idx).is(':checked');
+		var state = check==true?1:0;
+		var value = idx-1+","+state;
+		
+		var url = host+"/base/appapi!doNotNeedSessionAndSecurity_sendDevFun.do?userId="+userId+"&password="+password+"&clientDevId="+clientDevID+"&dtfid="+dtfid+"&dataValue="+value;
+		$.post(url, null, function(result) {
+			loadData(result);
+		}, 'json');
+	}
+	
+	function loadData(result){
+		if(result.success){
+			layer.alert("成功",{icon: 0});
+		}
+		else{
+			layer.alert(result.msg,{icon: 0});
+			
+			
+		}
+	}
+</script>
+</html>

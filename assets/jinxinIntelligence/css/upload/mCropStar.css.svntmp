@@ -1,0 +1,31 @@
+.mCropStar-tool-container{
+    position: absolute; bottom: 50px; left: 0px;
+    width: 100%;   background-color: rgba(22, 22, 22, 0.55 );
+    border-top: 1px solid #222222;
+}
+.mCropStar-angle-container{ overflow: hidden; }
+.mCropStar-angle-container-inner{
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex; margin: 0px;
+}
+.mCropStar-angle-container.expand .mCropStar-angle-item{
+    height: 35px;
+}
+.mCropStar-angle-item{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    height: 0px; line-height: 35px; color: #fff; text-align: center;
+    border-right: 1px dashed #666; cursor: pointer;
+    transition: all 0.4s;
+}
+.mCropStar-angle-item.on{
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.mCropStar-angle-item:last-of-type{ border: 0px; }
+.mCropStar-angle-item span{ position: relative; display: inline-block; margin: 0 auto; height: 100%; line-height: 35px; }
+.mCropStar-angle-item span i{ position: absolute; right: -15px; font-style: normal; font-size: 16px; }

@@ -1,0 +1,263 @@
+<!DOCTYPE HTML>
+
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>添加设备</title>
+    <base href="."/>
+    <meta name="viewport"
+          content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" type="text/css" href="css/resets.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
+    <!-- inc-->
+    <script type="text/javascript" src="js/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../www/cordova.js"></script>
+
+    <script type="text/javascript" src="js/sonic.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/common.js" charset="utf-8"></script>
+    <script type="text/javascript" src="layer/layer.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/swiper.min.js" charset="utf-8"></script>
+
+
+    <!-- //inc -->
+</head>
+<body class="pb-65">
+
+<!-- header start -->
+<div class="common-head common-head-second  clearfix">
+    <a href="index.htm" class="btns-detail" style="float:left;">返回</a>
+    <h4 style="width:200px;">添加设备</h4>
+    <a href="javascript:barcode()" class="btns-detail">二维码</a>
+
+</div>
+<div class="top_div"></div>
+<!-- header end -->
+<!-- 登录表单 -->
+<form onsubmit="return false;">
+    <input type='hidden' name='service_code' value='saveClient'>
+
+    <div class="form-bg form-bg-bottom clearfix">
+        <div class="form-group clearfix">
+            <label class="control-label label-width">设备类型</label>
+
+            <div class="group-right group-right-width">
+                <select id="devTypeId" class="form-control" name="data.devTypeId"></select>
+                <a href="javascript:;" class="form-icons arrow-delete"></a>
+
+                <div class="input-border"></div>
+            </div>
+        </div>
+
+        <div class="form-group clearfix">
+            <label class="control-label label-width">客户设备名称</label>
+
+            <div class="group-right group-right-width">
+                <input type="text" class="form-control" name='data.devName' placeholder="">
+                <a href="javascript:;" class="form-icons arrow-delete"></a>
+
+                <div class="input-border"></div>
+            </div>
+        </div>
+
+        <div class="form-group clearfix">
+            <label class="control-label label-width">客户设备编号</label>
+
+            <div class="group-right group-right-width">
+                <input type="text" class="form-control" placeholder="" name='data.devId'>
+                <a href="javascript:;" class="form-icons arrow-delete"></a>
+
+                <div class="input-border"></div>
+            </div>
+        </div>
+
+        <div class="form-group clearfix">
+            <label class="control-label label-width">设备序列号</label>
+
+            <div class="group-right group-right-width">
+                <input type="text" class="form-control" placeholder="" name='data.devCardSN'>
+                <a href="javascript:;" class="form-icons arrow-delete"></a>
+
+                <div class="input-border"></div>
+            </div>
+        </div>
+
+        <div class="form-group clearfix">
+            <label class="control-label label-width">客户设备卡号</label>
+
+            <div class="group-right group-right-width">
+                <input type="text" class="form-control" placeholder="" name='data.devCardNum'>
+
+                <div class="input-border border-none"></div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="form-down clearfix">
+        <div class="form-group">
+            <!--当以上内容被编辑时添加btn-common-red类，按钮成为红色-->
+            <!--<button type="submit" class="btn  btn-gray ">登录</button>-->
+            <button onclick='register()' class="btn  btn-gray btn-common-red">确认添加</button>
+        </div>
+
+    </div>
+
+</form>
+
+
+<script type="text/javascript">
+	window.onload = function(){
+		validUser();
+		load();
+	}
+	
+	function load() {
+	
+		var url = host + "/base/appapi!doNotNeedSessionAndSecurity_findAllDTypeByclientId.do?userId=" + userId
+				+ "&password=" + password ;
+		$.post(url, null, function(result) {
+			loadData(result);
+		}, 'json');
+	
+	}
+	
+	function loadData(result){
+		
+		if (result != undefined) {
+			var obj = document.getElementById("devTypeId");
+			for(i=0;i<result.obj.length;i++){
+				var model = result.obj[i];
+			
+				obj.options[i]=new Option(model.devTypeName,model.devTypeId);
+			}
+		}
+		
+	}
+	   function barcode(){
+
+                cordova.plugins.barcodeScanner.scan(
+      				function (result) {
+                		loadDevice(result.text);
+    				 },
+					  function (error) {
+						  alert("Scanning failed: " + error);
+					  }
+ 			  );
+
+		}
+
+/*
+	var type ;
+	function changeType(type1){
+		type=type1;
+		
+		window.location ="bridgejs!!scanEWM";
+		
+	}
+	
+	var ewm ;	
+	function receviceEWMData(ewm1){
+		ewm =ewm1;
+		
+		loadDevice(ewm1);
+		
+		
+		}
+	*/
+
+
+
+	function loadDevice(devCardSn) {
+		
+		var url = host + "/base/appapi!doNotNeedSessionAndSecurity_getDeviceByDevCardSn.do?userId=" + userId
+				+ "&password=" + password + "&devCardSn=" + devCardSn ;
+		$.post(url, null, function(result) {
+			loadDeviceResult(result);
+		}, 'json');
+	
+	}
+	
+	function loadDeviceResult(result){
+		
+		if (result != undefined) {
+			$('[name="data.devTypeId"]').val(result.obj.devTypeId);
+			$('[name="data.devTypeName"]').val(result.obj.devTypeName);
+			$('[name="data.devName"]').val(result.obj.devName);
+			$('[name="data.devCardSN"]').val(result.obj.devCardSn);
+			$('[name="data.devCardNum"]').val(result.obj.devCardNum);
+		}
+		
+	}
+
+	function register(){
+		if(validate()){
+ 		
+		  var url = host+"/base/appapi!doNotNeedSessionAndSecurity_saveClientDevice.do?userId=" + userId
+			+ "&password=" + password+"&"+$('form').serialize();
+		  $.post(url, null, function(result) {
+			  registerData(result);
+					}, 'json');
+		}
+	}
+	function registerData(result){
+		if(result.success){
+			
+			layer.open({
+				content : result.msg,
+				icon : 1,
+				closeBtn : 0,
+				yes : function(index, layero) {
+
+					layer.close(index);
+					var url = 'index.htm';
+					location.href=url;
+				}
+			});
+		
+		}else{
+			layer.alert(result.msg,{icon: 0});
+		}
+	}
+	
+	function validate(){
+		if($('[name="data.devTypeId"]').val()==""){
+			layer.alert('请选择设备类型',{icon: 0});
+			return false;
+		}
+		if($('[name="data.devName"]').val()==""){
+			layer.alert('客户设备名称必填',{icon: 0});
+			return false;
+		}
+		
+		if($('[name="data.devId"]').val()==""){
+			layer.alert('客户设备编号必填',{icon: 0});
+			return false;
+		}
+		
+		if($('[name="data.devCardSN"]').val()==""){
+			layer.alert('设备序列号必填',{icon: 0});
+			return false;
+		}
+		
+		
+		return  true;
+		
+	}
+
+
+
+
+
+
+</script>
+</body>
+
+</html>

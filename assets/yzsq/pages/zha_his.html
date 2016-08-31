@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tabs - jQuery Mobile Demos</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" href="../css/themes/default/yzsl.css">
+	<link rel="stylesheet" href="../css/themes/default/jquery.mobile.icons-1.4.5.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<link rel="stylesheet" href="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.css">
+	<link rel="stylesheet" href="../css/my.css">
+
+	<script src="../js/jquery.js"></script>
+	<script src="../_assets/js/index.js"></script>
+	<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="../js/common.js"></script>
+
+
+	<script src="http://cdn.rawgit.com/jquery/jquery-ui/1.10.4/ui/jquery.ui.datepicker.js"></script>
+	<script id="mobile-datepicker" src="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.js"></script>
+
+	<style id="">
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading {
+		margin: 0;
+		}
+
+		.ui-li-static.ui-collapsible {
+		padding: 0;
+		}
+
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading > .ui-btn {
+		border-top-width: 0;
+		}
+
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-btn,
+		.ui-li-static.ui-collapsible > .ui-collapsible-content {
+		border-bottom-width: 0;
+		}
+	</style>
+</head>
+<body>
+<div data-role="page"  data-quicklinks="true">
+
+	<!--<div data-role="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
+		&lt;!&ndash;<p><span class="jqm-version"></span> Demos</p>&ndash;&gt;
+		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
+		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	</div>&lt;!&ndash; /header &ndash;&gt;-->
+
+	<div data-role="header" data-position="fixed" >
+		<a rel="external" href="zha.html" class="ui-btn-left ui-btn ui-btn-icon-notext ui-icon-back ui-btn-corner-all ui-shadow" title="Home" data-form="ui-icon"> back </a>
+		<h1 class="ui-title" tabindex="0" role="heading" aria-level="1">扬州闸</h1>
+		<a rel="external" href="index.html" class="ui-btn-right ui-btn ui-btn-icon-notext ui-icon-grid ui-btn-corner-all ui-shadow ui-icon-home" title="Home" data-form="ui-icon"> home </a>
+
+		<!-- <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>-->
+	</div>
+
+	<div role="main" class="ui-content ">
+
+
+
+		<label >日期:</label>
+		<div>
+			<input type="text" readonly data-role="date" data-inline="false" id='dateFrom'>
+		</div>
+		至
+		<div>
+			<input type="text" readonly data-role="date" data-inline="false" id='dateTo'>
+		</div>
+		<label for="select-choice-a" class="select">类型:</label>
+		<select name="select-choice-a" id="select-choice-a" data-native-menu="false">
+			<!--    <option>Custom menu example</option>-->
+			    <option value="sw">水位</option>
+			<!--    <option value="ll">流量</option>-->
+			    <option value="dl">电流/电压</option>
+			    <option value="zmkd">闸门开度</option>
+			    <option value="czjl">操作记录</option>
+			    <option value="bjjl">报警记录</option>
+		</select>
+		<a href="#" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-btn-b ui-mini" onclick='queryYzz()'>查询</a>
+
+
+		<table data-role="table" id="table-dynamic" data-mode="columntoggle"
+			   class="ui-responsive table-stroke"
+			   data-column-btn-theme="b"
+			   data-column-popup-theme="a">
+
+			<thead>
+
+			</thead>
+			<tbody>
+
+			</tbody>
+		</table>
+
+
+
+
+	</div><!-- /content -->
+
+    <div data-role="footer"  data-position="fixed">
+		<div data-role="navbar" data-iconpos="left">
+			<ul>
+				<li><a href="index.html" data-icon="home" rel="external">扬州水情</a></li>
+				<li><a href="zha.html" data-icon="eye"  class="ui-btn-active" rel="external">扬州闸</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+	<!-- 返回顶部 start -->
+	<div style="display:block;" class="back-to" id="toolBackTop">
+		<a title="返回顶部" onclick="window.scrollTo(0,0);return false;" href="#top" class="back-top"></a>
+	</div>
+	<!-- 返回顶部 end -->
+
+	<!--<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<p>扬州金鑫 <span class="jqm-version"></span></p>
+	</div>--><!-- /footer -->
+
+
+
+</div><!-- /page -->
+
+<script type="text/javascript">
+	function determinPage(selectType){
+		if('sw'===selectType){
+				return  '&page=1&count='+count ;
+			}else if('ll'===selectType){//暂不处理
+
+
+			}else if('dl'===selectType){ //不分页，会使新页列超出
+
+				return '';
+
+			}else if('zmkd'===selectType){//不分页
+				return '';
+			}else if('czjl'===selectType){
+				return '&page=1&count='+count ;
+			}else if('bjjl'===selectType){
+				return '&page=1&count='+count ;
+			}
+	}
+	function queryYzz(){ //查询第一页数据
+		var dateFrom = $('#dateFrom').val();
+		var dateTo = $('#dateTo').val();
+		if(!dateFrom || !dateTo){
+			alert('请先选择日期');
+			return ;
+		}
+		var selectType = $('#select-choice-a').val();
+
+		var url = getDataUrl+"?service_code=yzzDynamicData&userId="+userId+"&password="+password+"&dateFrom="+dateFrom+"&dateTo="+dateTo+"&selectType="+selectType;
+		var tmpUrl = determinPage(selectType);
+		url = url+tmpUrl;
+		/*
+		$.post(url, null, function(result) {
+			$('#table-dynamic').html('');
+			if('sw'===selectType){
+				$('#table-dynamic').append(_template_sw(result,'all'))
+				.table( "refresh" )
+				.trigger( "create" );
+
+			}else if('ll'===selectType){//暂不处理
+				$('#table-dynamic').append(_template_ll(result));
+
+
+			}else if('dl'===selectType){
+				//$('#table-dynamic').append(_template_dl(result));
+
+				$('#table-dynamic').append(_template_dl(result,'all'))
+				.table( "refresh" )
+				.trigger( "create" );
+
+			}else if('zmkd'===selectType){
+				$('#table-dynamic').append(_template_zmkd(result,'all'))
+				.table( "refresh" )
+				.trigger( "create" );
+			}else if('czjl'===selectType){
+				$('#table-dynamic').append(_template_czjl(result,'all'))
+				.table( "refresh" )
+				.trigger( "create" );
+			}else if('bjjl'===selectType){
+				$('#table-dynamic').append(_template_bjjl(result,'all'))
+				.table( "refresh" )
+				.trigger( "create" );
+			}
+		}, 'json');
+		*/
+
+
+		 $.ajax({
+                type: "POST",
+                contentType: "application/json",//没什么用
+                dataType:'json', //必须的
+                url: url,
+                beforeSend: function () {
+                    loadingMask();
+                },
+                complete:function(){
+                    hideMask();
+                },
+                success: function (result) {
+				 	$('#table-dynamic').html('');
+					if('sw'===selectType){
+						$('#table-dynamic').append(_template_sw(result,'all'))
+						.table( "refresh" )
+						.trigger( "create" );
+
+					}else if('ll'===selectType){//暂不处理
+						$('#table-dynamic').append(_template_ll(result));
+
+
+					}else if('dl'===selectType){
+						//$('#table-dynamic').append(_template_dl(result));
+
+						$('#table-dynamic').append(_template_dl(result,'all'))
+						.table( "refresh" )
+						.trigger( "create" );
+
+					}else if('zmkd'===selectType){
+						$('#table-dynamic').append(_template_zmkd(result,'all'))
+						.table( "refresh" )
+						.trigger( "create" );
+					}else if('czjl'===selectType){
+						$('#table-dynamic').append(_template_czjl(result,'all'))
+						.table( "refresh" )
+						.trigger( "create" );
+					}else if('bjjl'===selectType){
+						$('#table-dynamic').append(_template_bjjl(result,'all'))
+						.table( "refresh" )
+						.trigger( "create" );
+					}
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(textStatus+'：请联系管理员');
+                 }
+            });
+	}
+
+	//根据select渲染相应的table
+	function _template_sw(data,isAll){ //水位
+		//alert(isAll);
+		var htmlHead = '';
+		if(isAll==='all'){
+			htmlHead += '<thead>'+
+						'	<tr >'+
+
+						'		<th >船闸上游水位</th>'+
+						'		<th >船闸闸室水位</th>'+
+						'		<th >船闸下游水位</th>'+
+						'		<th>节制闸上游水位</th>'+
+						'		<th >日期</th>'+
+						'	</tr>'+
+						'</thead>';
+		}
+
+		var htmlBody = '';
+		if(isAll==='all'){
+
+			htmlBody   +='<tbody>';
+		}
+		if(data && data.length){
+			for (var j = 0; j < data.length; j ++) {
+				var cur = data[j];
+		htmlBody   +=	'	<tr>'+
+
+						'		<td>'+cur.sw1+'</td>'+
+						'		<td>'+cur.sw2+'</td>'+
+						'		<td>'+cur.sw3+'</td>'+
+						'		<td >'+cur.sw4+'</td>'+
+						'		<td >'+cur.datetime+'</td>'+
+						'	</tr>';
+			}
+		}else{
+			htmlBody   += '没有数据';
+		}
+		if(isAll==='all'){
+
+			htmlBody   +='</tbody>';
+		}
+
+		//alert(htmlHead+htmlBody);
+		return htmlHead+htmlBody;
+	}
+
+
+	function _template_ll(){//没有流量
+
+	}
+	function _template_dl(data,isAll){
+		var htmlHead = '';
+
+		if(isAll==='all'){
+			htmlHead += '<thead>'+
+						'	<tr >'+
+
+						'		<th data-priority="1">'+'上闸首AB线电压'+'</th>'+
+						'		<th data-priority="1">'+'上闸首BC线电压'+'</th>'+
+						'		<th data-priority="2">'+'上闸首CA线电压'+'</th>'+
+						'		<th data-priority="2">'+'上闸首A相电流'+'</th>'+
+						'		<th data-priority="5">'+'上闸首B相电流'+'</th>'+
+						'		<th data-priority="6">'+'上闸首C相电流'+'</th>'+
+
+						'		<th data-priority="5">'+'节制闸AB线电压'+'</th>'+
+						'		<th data-priority="6">'+'节制闸BC线电压'+'</th>'+
+						'		<th data-priority="5">'+'节制闸CA线电压'+'</th>'+
+						'		<th data-priority="6">'+'节制闸A相电流'+'</th>'+
+						'		<th data-priority="5">'+'节制闸B相电流'+'</th>'+
+						'		<th data-priority="6">'+'节制闸C相电流'+'</th>'+
+
+						'		<th data-priority="5">'+'盐亭子闸AB线电压'+'</th>'+
+						'		<th data-priority="6">'+'盐亭子闸BC线电压'+'</th>'+
+						'		<th data-priority="5">'+'盐亭子闸CA线电压'+'</th>'+
+						'		<th data-priority="6">'+'盐亭子闸A相电流'+'</th>'+
+						'		<th data-priority="5">'+'盐亭子闸B相电流'+'</th>'+
+						'		<th data-priority="6">'+'盐亭子闸C相电流'+'</th>'+
+						'		<th data-priority="6">'+'日期'+'</th>'+
+
+						'	</tr>'+
+						'</thead>';
+
+		}
+
+		var htmlBody = '';
+		if(isAll==='all'){
+
+			htmlBody   +='<tbody>';
+		}
+		if(data && data.length){
+			for (var j = 0; j < data.length; j ++) {
+				var cur = data[j];
+		htmlBody   +=	'	<tr>'+
+
+						'		<td>'+cur.Uab1+'</td>'+
+						'		<td>'+cur.Ubc1+'</td>'+
+						'		<td>'+cur.Uca1+'</td>'+
+						'		<td>'+cur.Ia1+'</td>'+
+						'		<td>'+cur.Ib1+'</td>'+
+						'		<td>'+cur.Ic1+'</td>'+
+
+						'		<td>'+cur.Uab2+'</td>'+
+						'		<td>'+cur.Ubc2+'</td>'+
+						'		<td>'+cur.Uca2+'</td>'+
+						'		<td>'+cur.Ia2+'</td>'+
+						'		<td>'+cur.Ib2+'</td>'+
+						'		<td>'+cur.Ic2+'</td>'+
+
+						'		<td>'+cur.Uab3+'</td>'+
+						'		<td>'+cur.Ubc3+'</td>'+
+						'		<td>'+cur.Uca3+'</td>'+
+						'		<td>'+cur.Ia3+'</td>'+
+						'		<td>'+cur.Ib3+'</td>'+
+						'		<td>'+cur.Ic3+'</td>'+
+
+						'		<td>'+cur.datetime+'</td>'+
+
+						'	</tr>';
+			}
+		}
+		if(isAll==='all'){
+			htmlBody   +='</tbody>';
+		}
+		return htmlHead+htmlBody;
+	}
+
+
+	function _template_zmkd(data,isAll){
+
+		var htmlHead = '';
+
+			if(isAll==='all'){
+				htmlHead += '<thead>'+
+							'	<tr >'+
+
+							'		<th data-priority="1">'+'上闸首开度'+'</th>'+
+							'		<th data-priority="1">'+'节制闸中孔开度'+'</th>'+
+							'		<th data-priority="2">'+'节制闸北边孔开度'+'</th>'+
+							'		<th data-priority="2">'+'节制闸南边孔开度'+'</th>'+
+							'		<th data-priority="5">'+'盐亭子闸开度1'+'</th>'+
+							'		<th data-priority="6">'+'盐亭子闸开度2'+'</th>'+
+
+							'		<th data-priority="5">'+'导流涵洞开度1'+'</th>'+
+							'		<th data-priority="6">'+'导流涵洞开度2'+'</th>'+
+							'		<th data-priority="5">'+'下闸首液压门开度1'+'</th>'+
+							'		<th data-priority="6">'+'下闸首液压门开度2'+'</th>'+
+							'		<th data-priority="5">'+'下闸首小孔门开度1'+'</th>'+
+							'		<th data-priority="6">'+'下闸首小孔门开度2'+'</th>'+
+
+							'		<th data-priority="5">'+'上闸首小孔门开度1'+'</th>'+
+							'		<th data-priority="5">'+'上闸首小孔门开度2'+'</th>'+
+                         	'		<th data-priority="6">'+'日期'+'</th>'+
+
+							'	</tr>'+
+							'</thead>';
+
+			}
+
+			var htmlBody = '';
+			if(isAll==='all'){
+
+				htmlBody   +='<tbody>';
+			}
+			if(data && data.length){
+				for (var j = 0; j < data.length; j ++) {
+					var cur = data[j];
+			htmlBody   +=	'	<tr>'+
+
+							'		<td>'+cur.zm1+'</td>'+
+							'		<td>'+cur.zm2+'</td>'+
+							'		<td>'+cur.zm3+'</td>'+
+							'		<td>'+cur.zm4+'</td>'+
+							'		<td>'+cur.zm5+'</td>'+
+							'		<td>'+cur.zm6+'</td>'+
+
+							'		<td>'+cur.zm7+'</td>'+
+							'		<td>'+cur.zm8+'</td>'+
+							'		<td>'+cur.zm9+'</td>'+
+							'		<td>'+cur.zm10+'</td>'+
+							'		<td>'+cur.zm11+'</td>'+
+							'		<td>'+cur.zm12+'</td>'+
+
+							'		<td>'+cur.zm13+'</td>'+
+							'		<td>'+cur.zm14+'</td>'+
+
+							'		<td>'+cur.datetime+'</td>'+
+
+							'	</tr>';
+				}
+			}
+			if(isAll==='all'){
+				htmlBody   +='</tbody>';
+			}
+			return htmlHead+htmlBody;
+
+	}
+	function _template_czjl(data,isAll){
+	//alert(isAll);
+		var htmlHead = '';
+		if(isAll==='all'){
+			htmlHead += '<thead>'+
+						'	<tr >'+
+
+						'		<th >操作人</th>'+
+						'		<th >操作对象</th>'+
+						'		<th >操作事件</th>'+
+						'		<th >日期</th>'+
+						'	</tr>'+
+						'</thead>';
+		}
+
+		var htmlBody = '';
+		if(isAll==='all'){
+
+			htmlBody   +='<tbody>';
+		}
+		if(data && data.length){
+			for (var j = 0; j < data.length; j ++) {
+				var cur = data[j];
+		htmlBody   +=	'	<tr>'+
+
+						'		<td>'+cur.operator+'</td>'+
+						'		<td>'+cur.name+'</td>'+
+						'		<td>'+cur.operation+'</td>'+
+						'		<td >'+cur.datetime+'</td>'+
+						'	</tr>';
+			}
+		}else{
+				htmlBody   += noRecordHtml;
+			}
+		if(isAll==='all'){
+
+			htmlBody   +='</tbody>';
+		}
+
+		//alert(htmlHead+htmlBody);
+		return htmlHead+htmlBody;
+	}
+	function _template_bjjl(data,isAll){
+	//alert(isAll);
+			var htmlHead = '';
+			if(isAll==='all'){
+				htmlHead += '<thead>'+
+							'	<tr >'+
+
+							'		<th >报警信息</th>'+
+							'		<th >日期</th>'+
+							'	</tr>'+
+							'</thead>';
+			}
+
+			var htmlBody = '';
+			if(isAll==='all'){
+
+				htmlBody   +='<tbody>';
+			}
+			if(data && data.length){
+				for (var j = 0; j < data.length; j ++) {
+					var cur = data[j];
+			htmlBody   +=	'	<tr>'+
+
+							'		<td>'+cur.message+'</td>'+
+							'		<td >'+cur.datetime+'</td>'+
+							'	</tr>';
+				}
+			}else{
+				htmlBody   += noRecordHtml;
+			}
+			if(isAll==='all'){
+
+				htmlBody   +='</tbody>';
+			}
+
+			//alert(htmlHead+htmlBody);
+			return htmlHead+htmlBody;
+	}
+
+
+	var page = 1;
+	$(function() {
+		 $(window).scroll(function() {//分页
+		 /*
+				alert($(window).scrollTop());
+				alert( $(window).height());
+				alert($(document).height() );
+				alert($(this).scrollTop() );
+
+				alert($(window).scrollTop() + $(window).height() + 20);
+				alert( $(document).height());
+		*/
+				  if ($(window).scrollTop() + $(window).height() + 20 >= $(document).height() && $(this).scrollTop() > 20) {
+
+
+
+							var dateFrom = $('#dateFrom').val();
+							var dateTo = $('#dateTo').val();
+							if(dateFrom && dateTo ){
+
+								page++;
+								var selectType = $('#select-choice-a').val();
+
+								if(selectType!='dl' && selectType!='zmkd'){ //电流和闸门不分页
+
+									var url = getDataUrl+"?service_code=yzzDynamicData&userId="+userId+"&password="+password+"&dateFrom="+dateFrom+"&dateTo="+dateTo+"&selectType="+selectType;
+									url += '&page='+page+'&count='+count;
+									$.post(url, null, function(result) {
+										if('sw'===selectType){
+											$('#table-dynamic tbody').append(_template_sw(result,'body'))
+											.table( "refresh" )
+											.trigger( "create" );
+
+										}else if('ll'===selectType){//暂不处理
+											$('#table-dynamic tbody').append(_template_ll(result,'body'));
+
+
+										}/*else if('dl'===selectType){
+											//$('#table-dynamic').append(_template_dl(result));
+
+											$('#table-dynamic tbody').append(_template_dl(result))
+											.table( "refresh" )
+											.trigger( "create" );
+
+										}else if('zmkd'===selectType){
+											$('#table-dynamic tbody').append(_template_zmkd(result));
+										}*/else if('czjl'===selectType){
+											if(result && result.length){//防止 '没有数据append'
+												$('#table-dynamic tbody').append(_template_czjl(result,'body'));
+											}else{
+												$('#table-dynamic tbody').html('没有数据');
+											}
+										}else if('bjjl'===selectType){
+											if(result && result.length){//防止 '没有数据append'
+
+												$('#table-dynamic tbody').append(_template_bjjl(result,'body'));
+											}else{
+												$('#table-dynamic tbody').html('没有数据');
+											}
+										}
+									}, 'json');
+								}
+
+
+							}
+
+				  }
+
+			  });
+
+			});
+
+</script>
+</body>
+</html>

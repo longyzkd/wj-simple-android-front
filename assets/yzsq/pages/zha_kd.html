@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tabs - jQuery Mobile Demos</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" href="../css/themes/default/yzsl.css">
+	<link rel="stylesheet" href="../css/themes/default/jquery.mobile.icons-1.4.5.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<link rel="stylesheet" href="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.css">
+	<link rel="stylesheet" href="../css/my.css">
+
+	<script src="../js/jquery.js"></script>
+	<script src="../_assets/js/index.js"></script>
+	<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="../js/common.js"></script>
+
+
+	<script src="http://cdn.rawgit.com/jquery/jquery-ui/1.10.4/ui/jquery.ui.datepicker.js"></script>
+	<script id="mobile-datepicker" src="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.js"></script>
+
+	<style id="">
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading {
+		margin: 0;
+		}
+
+		.ui-li-static.ui-collapsible {
+		padding: 0;
+		}
+
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading > .ui-btn {
+		border-top-width: 0;
+		}
+
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-btn,
+		.ui-li-static.ui-collapsible > .ui-collapsible-content {
+		border-bottom-width: 0;
+		}
+	</style>
+</head>
+<body>
+<div data-role="page"  data-quicklinks="true">
+
+	<!--<div data-role="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
+		&lt;!&ndash;<p><span class="jqm-version"></span> Demos</p>&ndash;&gt;
+		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
+		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	</div>&lt;!&ndash; /header &ndash;&gt;-->
+
+	<div data-role="header" data-position="fixed" >
+		<a rel="external" href="zha.html" class="ui-btn-left ui-btn ui-btn-icon-notext ui-icon-back ui-btn-corner-all ui-shadow" title="Home" data-form="ui-icon"> back </a>
+		<h1 class="ui-title" tabindex="0" role="heading" aria-level="1">扬州闸</h1>
+		<a rel="external" href="index.html" class="ui-btn-right ui-btn ui-btn-icon-notext ui-icon-grid ui-btn-corner-all ui-shadow ui-icon-home" title="Home" data-form="ui-icon"> home </a>
+
+		<!-- <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>-->
+	</div>
+
+	<div role="main" class="ui-content ">
+
+
+		<!--<table data-role="table" id="table-yzz-zmkd" data-mode="columntoggle"
+			   class="ui-body-d ui-shadow table-stripe ui-responsive"
+			   data-column-btn-theme="b"
+			   data-column-popup-theme="a">-->
+
+		<table data-role="table" id="table-yzz-zmkd" data-mode="reflow" class="ui-responsive">
+			<thead>
+			<tr class="ui-bar-d">
+				<th >上闸首开度</th>
+				<th >节制闸中孔开度</th>
+				<th data-priority="3">节制闸北边孔开度</th>
+				<th data-priority="4">节制闸南边孔开度</th>
+				<th data-priority="6">盐亭子闸开度1</th>
+				<th data-priority="6">盐亭子闸开度2</th>
+				<th data-priority="6">导流涵洞开度1</th>
+				<th data-priority="6">导流涵洞开度2</th>
+				<th data-priority="6">下闸首液压门开度1</th>
+				<th data-priority="6">下闸首液压门开度2</th>
+				<th data-priority="6">下闸首小孔门开度1</th>
+				<th data-priority="6">下闸首小孔门开度2</th>
+				<th data-priority="6">上闸首小孔门开度1</th>
+				<th data-priority="6">上闸首小孔门开度2</th>
+				<!--<th data-priority="6">日期</th>-->
+
+			</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+		</table>
+
+
+
+
+	</div><!-- /content -->
+
+    <div data-role="footer"  data-position="fixed">
+		<div data-role="navbar" data-iconpos="left">
+			<ul>
+				<li><a href="index.html" data-icon="home" rel="external">扬州水情</a></li>
+				<li><a href="zha.html" data-icon="eye"  class="ui-btn-active" rel="external">扬州闸</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+	<!-- 返回顶部 start -->
+	<div style="display:block;" class="back-to" id="toolBackTop">
+		<a title="返回顶部" onclick="window.scrollTo(0,0);return false;" href="#top" class="back-top"></a>
+	</div>
+	<!-- 返回顶部 end -->
+
+	<!--<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<p>扬州金鑫 <span class="jqm-version"></span></p>
+	</div>--><!-- /footer -->
+
+
+
+</div><!-- /page -->
+
+<script type="text/javascript">
+	setInterval(refresh, interval);
+	function refresh (){
+			renderKd();//扬州闸数据
+	}
+
+	window.onload = function(){
+			renderKd();
+	}
+	/*
+	$(function() {
+			alert(2);
+			renderKd();
+	});
+	*/
+
+	function renderKd(){
+		var url = getDataUrl+"?service_code=yzzKdData&userId="+userId+"&password="+password;
+		/*$.post(url, null, function(result) {
+			loadYzzKdData(result);
+		}, 'json');*/
+
+		 $.ajax({
+                type: "POST",
+                contentType: "application/json",//没什么用
+                dataType:'json', //必须的
+                url: url,
+                beforeSend: function () {
+                    loadingMask();
+                },
+                complete:function(){
+                    hideMask();
+                },
+                success: function (result) {
+                     loadYzzKdData(result);
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(textStatus+'：请联系管理员');
+                 }
+            });
+	}
+
+	function loadYzzKdData(result){
+
+		if (result != undefined) {
+			var $tbody2 = $('#table-yzz-zmkd tbody');
+			$tbody2.html('');
+			var html2 = '';
+			var zmkd = result.zmkd;
+				html2 += '<tr><td>'+zmkd.zm1+'</td>	<td>'+zmkd.zm2+'</td><td>'+zmkd.zm3+'</td><td>'+zmkd.zm4+'</td><td>'+zmkd.zm5+'</td><td>'+zmkd.zm6+'</td><td>'+zmkd.zm7+'</td><td>'+zmkd.zm8+'</td>'
+				+'<td>'+zmkd.zm9+'</td><td>'+zmkd.zm10+'</td><td>'+zmkd.zm11+'</td><td>'+zmkd.zm12+'</td><td>'+zmkd.zm13+'</td><td>'+zmkd.zm14+'</td></tr>';
+			//$tbody2.append(html2);
+			$tbody2.append(html2).closest( "table#table-yzz-zmkd" )
+				.table( "refresh" )
+				// Trigger if the new injected markup contain links or buttons that need to be enhanced
+				.trigger( "create" );
+		}
+
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tabs - jQuery Mobile Demos</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+	<link rel="stylesheet" href="../css/themes/default/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="../css/my.css">
+
+	<link rel="stylesheet" href="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.css">
+	<script src="../js/jquery.js"></script>
+	<script src="../_assets/js/index.js"></script>
+	<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="../js/common.js"></script>
+
+
+	<script src="http://cdn.rawgit.com/jquery/jquery-ui/1.10.4/ui/jquery.ui.datepicker.js"></script>
+	<script id="mobile-datepicker" src="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.js"></script>
+
+	<style id="inset-tablist">
+		.tablist-left {
+		width: 25%;
+		display: inline-block;
+		}
+		.tablist-content {
+		width: 60%;
+		display: inline-block;
+		vertical-align: top;
+		margin-left: 5%;
+		}
+
+
+		.jqm-demos .jqm-content {
+		width: 92%;
+
+		}
+
+
+
+	</style>
+
+	<style id="collapsible-list-item-style-flat">
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading {
+		margin: 0;
+		}
+
+		.ui-li-static.ui-collapsible {
+		padding: 0;
+		}
+
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading > .ui-btn {
+		border-top-width: 0;
+		}
+
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-btn,
+		.ui-li-static.ui-collapsible > .ui-collapsible-content {
+		border-bottom-width: 0;
+		}
+	</style>
+</head>
+<body>
+     
+ 	<div data-role="header" data-position="fixed">
+		<h1>扬州水情</h1>
+	</div>
+	<div data-role="content" id="main1Content" >
+
+		<table data-role="table" id="table-sq" data-mode="columntoggle"
+			   class="ui-body-d ui-shadow table-stripe ui-responsive"
+			   data-column-btn-theme="b" data-column-btn-text="Columns to display..."
+			   data-column-popup-theme="a">
+
+			<thead>
+			<tr class="ui-bar-d">
+				<th >闸站名</th>
+				<th  >上水位</th>
+				<th >下水位</th>
+				<th  >流量</th>
+				<th  data-priority="5">时间</th>
+			</tr>
+			</thead>
+			<tbody>
+
+
+			</tbody>
+		</table>
+	</div>
+
+
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#" data-icon="grid" class="ui-btn-active">扬州水情</a></li>
+				<li><a href="main2.html" data-icon="info"  rel="external">扬州闸</a></li>
+			</ul>
+		</div>		
+	</div>
+
+	<!-- 返回顶部 start -->
+	<!--<div style="display:block;" class="back-to" id="toolBackTop">
+		<a title="返回顶部" onclick="window.scrollTo(0,0);return false;" href="#top" class="back-top"></a>
+	</div>-->
+
+	<script type="text/javascript">
+	setInterval(refresh, interval);
+	function refresh (){
+			renderOne();//水情数据
+	}
+		$(function() {
+
+			renderOne();
+		});
+
+		//扬州水情表报表数据
+	function loadData(result){
+		//alert(result);
+		if (result != undefined) {
+			//alert(result.success);
+			if(result.success){
+				var $tbody = $('#table-sq tbody');
+				$tbody.html('');
+				var html = '';
+				for (var j = 0; j < result.obj.length; j ++) {
+					var cur = result.obj[j];
+					//浮点数保留四合五入两位小数
+					html += '<tr><td>'+(cur.zbmName?cur.zbmName:cur.zbmCode ) +'</td><td>'+(cur.ssw==undefined?'-':cur.ssw.toFixed(2))+'</td><td>'+(cur.xsw==undefined?'-':cur.xsw.toFixed(2))+'</td><td>'+(cur.ln==undefined?'-':cur.ln)+'</td><td>'+cur.tm+'</td></tr>';
+				}
+				$tbody.append(html).closest( "table#table-sq" )
+				.table( "refresh" )
+				// Trigger if the new injected markup contain links or buttons that need to be enhanced
+				.trigger( "create" );
+			}else{
+				alert('出错了');
+			}
+
+		}
+	}
+
+
+
+	</script>
+</body>
+</html>

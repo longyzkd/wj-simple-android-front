@@ -1,0 +1,316 @@
+
+<!DOCTYPE HTML>
+
+<html>
+<head lang="en">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>添加设备</title>
+	<base href="."/>
+	<meta name="viewport"
+		  content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<link rel="stylesheet" type="text/css" href="css/resets.css"/>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	<link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
+	<!-- inc-->
+	<script type="text/javascript" src="js/jquery.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../www/cordova.js"></script>
+
+	<script type="text/javascript" src="js/sonic.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/common.js" charset="utf-8"></script>
+	<script type="text/javascript" src="layer/layer.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/swiper.min.js" charset="utf-8"></script>
+	<!-- //inc -->
+</head>
+
+<body>
+<!-- header start -->
+<div class="common-head common-head-second order-head clearfix">
+	<a href="personal-home.jsp" class="product-icons gray-back" ></a>
+	<h4>水情</h4>
+<!-- 	<a href="javascript:;" class="product-icons gray-search " ></a> -->
+<!-- 	<a href="javascript:;" class="product-icons gray-msg " ></a> -->
+</div>
+<div class="top_div"></div>
+<!-- header end -->
+<!-- 切换start -->
+<div id="tab2">
+	<!-- tabs start -->
+	<div class="tabs clearfix">
+		<ul>
+			<li class="selected" id="one1" onclick="setTab('one',1)">
+				<a href="javascript:;">水情</a>
+			</li>
+			<li id="one2" onclick="setTab('one',2)">
+				<a href="javascript:;">扬州闸</a>
+			</li>
+		</ul>
+	</div>
+	<!-- tabs end -->
+	<!-- order-content start -->
+	<div class="tabscontent">
+		<div id="con_one_1">
+			<div class="common-emotion clearfix">
+			    <p class="gray-fonts">没有查询到相关数据</p>
+			</div>
+		</div>
+		<div id="con_one_2" style="display:none;">
+			<div class="common-emotion clearfix">
+			    <p class="gray-fonts">没有查询到相关数据</p>
+			</div>
+		</div>
+
+<!-- 		<div id="con_one_4" style="display:none;"> -->
+		
+<!-- 		</div> -->
+<!-- 		<div id="con_one_5" style="display:none;"> -->
+		
+<!-- 		</div> -->
+	</div>
+	<!-- order-content end -->
+</div>
+<!-- 切换end -->
+
+<!-- 返回顶部 start -->
+<div style="display:none;" class="back-to" id="toolBackTop">
+	<a title="返回顶部" onclick="window.scrollTo(0,0);return false;" href="#top" class="back-top"></a>
+</div>
+<!-- 返回顶部 end -->
+
+<script src="js/app/top.js" type="text/javascript"></script>
+<script src="js/app/tabs-2.js" type="text/javascript"></script>
+
+
+	<script type="text/javascript">
+		$(function() {
+
+				validUser();
+				var url = getDataUrl+"?service_code=sqData&userId="+userId+"&password="+password;
+				$.post(url, null, function(result) {
+					loadData(result);
+						}, 'json');
+		
+			});
+		
+		function _loadPage(tab,data,page,count){
+			//alert(data.length);
+			//tab.html('');
+			var html ='';
+			var k = (page - 1) * count +count>data.length?data.length:(page - 1) * count +count ;
+			var i =(page - 1) * count;
+			//alert(i);
+			//alert(k);
+			if(i>=k){
+				
+				if(!$('#nodata').length){
+					$('#tab2').after('<div id="nodata" class="product-title"><span>已经没有了</span><div class="border-line"></div></div>');
+				}
+				return;
+			}
+			for(i ;i<k ;i++){
+			
+				var cur = data[i];
+				
+				html=_render(html,cur);
+					
+			}
+		//	alert(html);
+			 tab.append(html);
+		}
+		
+		
+		
+		function loadData(result){
+			
+			var page = 1;
+			//var page2 = 1;
+			
+			var waitPayArr= [];
+			var payArr= [];
+			$("#con_one_1").html('');
+			var html = '';
+			for (var i = 0; i < result.length; i ++) {
+				var model = result[i];
+				
+				var statusName = "";
+				if(model.status==1){
+					statusName = "待确认";
+				}
+				else if(model.status==2){
+					statusName = "订单确认";//代付款
+					waitPayArr.push(model);
+				}
+				else if(model.status==3){
+					statusName = "已付款";
+					payArr.push(model);
+				}
+				else if(model.status==4){
+					statusName = "已发货";
+				}
+				else if(model.status==5){
+					statusName = "已收货";
+				}
+				else if(model.status==6){
+					statusName = "安装完成";
+				}
+				else if(model.status==7){
+					statusName = "交易完成";
+				}
+				else if(model.status==9){
+					statusName = "取消订单";
+				}
+				
+			
+			}
+			
+			//加载 ‘全部订单’
+			_loadPage($('#con_one_1'),result,page,count);
+			
+			//_loadPage($('#con_one_2'),result,page2,count);
+			
+			  $(window).scroll(function() {
+				
+				  if ($(window).scrollTop() + $(window).height() + 20 >= $(document).height() && $(this).scrollTop() > 20) {
+					 
+					  if($('#con_one_1').css('display')=='block'){
+							page++;
+							_loadPage($(curTab),result,page,count);
+						}
+// 						else if($('#con_one_2').css('display')=='block'){
+// 							page2++;
+// 							_loadPage($(curTab),result,page2,count);
+// 						}
+					
+					
+				  }
+			  });
+			
+			
+		
+			renderTab($("#con_one_2"),waitPayArr);
+			renderTab($("#con_one_3"),payArr);
+		}
+		
+		function renderTab(tab,result){
+			
+			if(result && result.length>0){
+				tab.html('');
+				var html = '';
+				for (var i = 0; i < result.length; i ++) {
+					var model = result[i];
+					
+					html +=	'<div class="order-box clearfix">'
+					html +='<div class="order-box-head clearfix">'
+//	 				html +=	'	<a href="javascript:removeOrder('+model.orderId+')" class="product-icons gray-delete f_r"></a>'
+					html +=	'	<span>'+model.statusName+'</span>'
+					html +=	'</div>'
+					
+					for (var j = 0; j < model.tordergoods.length; j ++) {
+						var goods = model.tordergoods[j];
+						
+						html +=	'<div class="product-type-info clearfix">'
+						
+						html +=	'	<div class="product-type-pic">'
+						html +='		<a href="javascript:;" class="pic-img" style="background-image: url('+host +'/upload'+goods.filePath+')"></a>'
+						html +=	'	</div>'
+						
+						html +=	'	<div class="product-type-right">'
+						html +='		<a href="javascript:;" class="name">'+goods.goodsName+'</a>'
+
+						if(goods.type==1){
+							
+							html +=	'		<div >￥'+goods.price+'</div>'
+						}else if(goods.type==2){
+							html +=	'		<div >'+goods.serviceName+'</div>'
+						}
+						
+						html +=	'		<div >数量x'+goods.count+'</div>'
+						html +=	'	</div>'
+						html +=	'</div>'
+					}
+					
+					html +=	'<div class="order-down clearfix">'
+					
+					if(model.status==1 || model.status==2){
+						
+						
+		 				html +=	'	<div class="f_r">'
+		 				html +=	'		<a href="order-confire.jsp?order_id='+model.orderId+'" class="btns-button yellow">支付订单</a>'
+		 				html +='	</div>'
+					}
+					html +=	'	<span >金额:<i class="black-price">￥'+model.goodsAmount+'</i></span>'
+
+					html +=	'</div>'
+					
+					
+					html +=	'	</div>'
+				}
+				
+				tab.append(html);
+			}
+			
+		}
+		
+		function _render(html ,model){
+			
+			html +=	'<div class="order-box clearfix">'
+				html +='<div class="order-box-head clearfix">'
+// 				html +=	'	<a href="javascript:removeOrder('+model.orderId+')" class="product-icons gray-delete f_r"></a>'
+				html +=	'	<span>'+model.statusName+'</span>'
+				html +=	'</div>'
+				
+				for (var j = 0; j < model.tordergoods.length; j ++) {
+					var goods = model.tordergoods[j];
+					
+					html +=	'<div class="product-type-info clearfix">'
+					
+					html +=	'	<div class="product-type-pic">'
+					html +='		<a href="javascript:;" class="pic-img" style="background-image: url('+host +'/upload'+goods.filePath+')"></a>'
+					html +=	'	</div>'
+					
+					html +=	'	<div class="product-type-right">'
+					html +='		<a href="javascript:;" class="name">'+goods.goodsName+'</a>'
+				
+
+					if(goods.type==1){
+						
+						html +=	'		<div >￥'+goods.price+'</div>'
+					}else if(goods.type==2){
+						html +=	'		<div >'+goods.serviceName+'</div>'
+					}
+				
+					html +=	'		<div >数量x'+goods.count+'</div>'
+					html +=	'	</div>'
+					html +=	'</div>'
+				}
+				
+				html +=	'<div class="order-down clearfix">'
+				
+					if(model.status==1 || model.status==2){
+						
+						
+		 				html +=	'	<div class="f_r">'
+		 				html +=	'		<a href="order-confire.jsp?order_id='+model.orderId+'" class="btns-button yellow">支付订单</a>'
+		 				html +='	</div>'
+					}
+				
+				html +=	'	<span >金额:<i class="black-price">￥'+model.goodsAmount+'</i></span>'
+
+				html +=	'</div>'
+				
+				
+				html +=	'	</div>'
+				
+				return html;
+		}
+	</script>
+
+</body>
+
+</html>

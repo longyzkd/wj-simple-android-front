@@ -1,0 +1,249 @@
+<!DOCTYPE HTML>
+
+<html>
+<head lang="en">
+	<!--<link rel="import" href="inc/inc.htm" >-->
+
+<title>金鑫智能</title>
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+<link rel="stylesheet" href="assets/css/amazeui.min.css" />
+
+<link rel="stylesheet" href="css/swiper.min.css" />
+
+	 <link rel="stylesheet" href="css/app.css" />
+
+	<!-- inc-->
+	<script type="text/javascript" src="js/jquery.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../www/cordova.js"></script>
+	<script src="js/app/main.js"></script>
+
+	<script type="text/javascript" src="js/sonic.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/common.js" charset="utf-8"></script>
+	<script type="text/javascript" src="layer/layer.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/swiper.min.js" charset="utf-8"></script>
+
+
+<!-- //inc -->
+
+<!--<script src="assets/js/syExtJquery.js"></script>-->
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/app.js"></script>
+<style>
+.am-header-fixed {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	z-index: 1010;
+}
+</style>
+<style>
+.header {
+	text-align: center;
+}
+
+.header h1 {
+	font-size: 200%;
+	color: #333;
+	margin-top: 30px;
+}
+
+.header p {
+	font-size: 14px;
+}
+
+body {
+	color: #0E90D2;
+}
+</style>
+</head>
+<body>
+	<header data-am-widget="header"
+		class="am-header am-header-default am-header-fixed">
+		<div class="am-header-left am-header-nav">
+			<div class="am-dropdown" data-am-dropdown>
+  <button class="am-btn am-btn-primary am-dropdown-toggle" data-am-dropdown-toggle>菜单列表 <span class="am-icon-caret-down"></span></button>
+  <ul class="am-dropdown-content">
+    <li><a href="addDevice.htm">添加设备</a></li>
+     <li class="am-divider"></li>
+    <li><a href="modify-pwd.htm">修改密码</a></li>
+    <li class="am-divider"></li>
+    <li><a href="javascript:loginout();">注销</a></li>
+  </ul>
+</div>
+		</div>
+
+		<h1 class="am-header-title">金鑫智能</h1>
+
+	</header>
+
+	<div class="am-g">
+		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+
+			<div class="am-g">
+				<div class="swiper-container swiper-banner-container"
+					id="swiper-banner-container">
+					<div class="swiper-wrapper swiper-banner-wrapper">
+						<div class="swiper-slide swiper-banner-slide">
+							<img src="images/drawable-hdpi/a1.jpg" alt="banner-01">
+						</div>
+						<div class="swiper-slide swiper-banner-slide">
+							<img src="images/drawable-hdpi/a5.jpg" alt="banner-02">
+						</div>
+						<div class="swiper-slide swiper-banner-slide">
+							<img src="images/drawable-hdpi/a6.jpg" alt="banner-01">
+						</div>
+						<div class="swiper-slide swiper-banner-slide">
+							<img src="images/drawable-hdpi/a7.jpg" alt="banner-02">
+						</div>
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination" id="swiper-banner-pagination"></div>
+				</div>
+
+			</div>
+
+			<div id="content">
+			
+			</div>
+
+			
+
+		</div>
+	</div>
+
+	<!-- fixed定位 end-->
+	
+	<script>
+	
+		
+		function loginout(){
+			//$.cookie('userinfo', null);
+			//NativeStorage.remove("userinfo");
+			window.localStorage.removeItem("userinfo");
+
+			var url = 'login.htm';
+			window.location.href=url;
+
+		}
+		
+		window.onload = function(){
+		validUser();
+		load();
+			
+		}
+		function load() {
+
+			var url = host + "/base/appapi!doNotNeedSessionAndSecurity_devdataGrid.do?userId=" + userId
+					+ "&password=" + password ;
+			$.post(url, null, function(result) {
+				loadData(result);
+			}, 'json');
+
+		}
+
+		function loadData(result) {
+			
+			if (result != undefined) {
+				var user = userinfo;
+				$("#content").html('');
+				var html = '';
+
+				for (var i = 0; i < result.obj.rows.length; i++) {
+					var model = result.obj.rows[i];
+					var type = model.tdevicetype.devTypeId;
+					var online = model.online=="离线"?"0":"1";
+					html += '<div class="am-g" style="margin-top:6px; border-bottom:1px solid #16B3F1;">';
+					if(type == 4){
+						var url = "switchForm.htm?clientDevID="+model.clientDevId+"&dtfid="+model.tclientdevdataapps[0].dtfid+"&dataValue="+model.tclientdevdataapps[0].dataValue+"&online="+online;
+						html += '<a href="'+url+'">';
+					}
+					else{
+						html += '<a href="javascript:;">';
+					}
+					
+					
+					html += '	<div class="am-u-sm-3" style="">';
+					html += '		<img style="width:80px;" alt="" src="images/drawable-hdpi/device1.png">';
+					html += '	</div>';
+					html += '	<div class="am-u-sm-3" style="">';
+					html += '		<span>'+model.devName+'</span>';
+					html += '	</div>';
+					html += '	<div class="am-u-sm-5" style="">';
+					if(type == 1){
+						var wd="";
+						var sd="";
+						for(var j = 0; j < model.tclientdevdataapps.length; j++){
+							if(model.tclientdevdataapps[j].dtfid==9){
+								wd = model.tclientdevdataapps[j].dataValue;
+							}
+							if(model.tclientdevdataapps[j].dtfid==10){
+								sd = model.tclientdevdataapps[j].dataValue;
+							}
+						}
+						html += '		<span style="line-height:35px;">温度：'+wd+'<br />';
+						html += '		湿度：'+sd+'<br />';
+						html += '		</span>';
+					}
+					else if(type == 2){
+						html += '		<span style="line-height:35px;">TDS：11mg/L<br />';
+						html += '		水温：18 ℃<br />';
+						html += '		</span>';
+					}
+					else if(type == 3){
+						html += '		<span style="line-height:20px;">PM2.5：37<br />';
+						html += '		温度：21 ℃<br />';
+						html += '		湿度：60%<br />';
+						html += '		</span>';
+					}
+					else if(type == 4){
+						var kt="";
+						var zw="";
+						var cf="";
+						var state = "";
+						for(var j = 0; j < model.tclientdevdataapps.length; j++){
+							
+							if(model.tclientdevdataapps[j].dtfid==418){
+								state = model.tclientdevdataapps[j].dataValue;
+							}
+						}
+						if(state != ""){
+							
+							kt = state.substring(15,16)==0?'关':'开';
+							zw = state.substring(14,15)==0?'关':'开';
+							cf = state.substring(13,14)==0?'关':'开';
+						}
+						
+						html += '		<span style="line-height:20px;">客厅开关：'+kt+'<br />';
+						html += '		主卧开关：'+zw+'<br />';
+						html += '		厨房开关：'+cf+'<br />';
+						html += '		</span>';
+					}
+					
+					html += '	</div>';
+					html += '	<div class="am-u-sm-1" style="padding-top:20px; ">';
+					html += '		<img alt="" style="margin-left:0px;"';
+					html += '			src="images/drawable-hdpi/oa_list_arrow.png">';
+					html += '	</div>';
+					html += '</a>';
+					html += '</div>';
+				}
+				$("#content").append(html);
+			}
+
+		}
+	</script>
+
+
+</body>
+</html>
