@@ -27,10 +27,9 @@
 		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
 	</div>&lt;!&ndash; /header &ndash;&gt;-->
 
-	<div data-role="header" data-position="fixed" >		
+	<div data-role="header" data-position="fixed" >
+		<a href="#" onclick='logout()' data-theme="b" data-icon="gear" data-transition="slide">注销</a>
 		<h1 class="ui-title" tabindex="0" role="heading" aria-level="1">扬州水情</h1>
-
-       <!-- <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>-->
 	</div>
 
 	<div role="main" class="ui-content">
@@ -62,10 +61,15 @@
 	function refresh (){
 			renderOne();//水情数据
 	}
-		$(function() {
 
+	$(function() {
+		if(true){
+		//if(validUser()){
 			renderOne();
-		});
+
+		}
+
+	});
 
 		//扬州水情表报表数据
 	function loadData(result){

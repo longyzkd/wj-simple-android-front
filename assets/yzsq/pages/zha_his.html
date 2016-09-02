@@ -123,6 +123,11 @@
 </div><!-- /page -->
 
 <script type="text/javascript">
+
+	$(function(){
+		validUser();
+	});
+
 	function determinPage(selectType){
 		if('sw'===selectType){
 				return  '&page=1&count='+count ;

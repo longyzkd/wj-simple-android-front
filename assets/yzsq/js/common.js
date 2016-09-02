@@ -16,13 +16,13 @@ var nodatamsg = "没有查询到相关数据";
 var count =10;
 var noRecordHtml ='没有数据';
 var userinfo;
+
 function getUserInfo(){
-var res=cookie_user=window.localStorage.getItem("userinfo");
-alert(res);
+    var res=cookie_user=window.localStorage.getItem("userinfo");
 	if(res ){
 		userinfo = $.parseJSON(res) ;
-		userId = userinfo.userId;
-		password = userinfo.pwd;
+		username = userinfo.username;
+		password = userinfo.password;
 	}
 	else{
 		
@@ -42,11 +42,13 @@ function validUser(url){
 	getUserInfo();
 	if(userinfo == null || userinfo == ""){
 		if(url == null){
-			url = 'login.htm';
+			url = '../pages/login.html';
 		}
 
 		location.href=url;
+		return false;
 	}
+	return true;
 }
 //function getUserInfo(){
 //		var cookie_user=$.cookie('userinfo');
@@ -262,3 +264,10 @@ function renderOne(){
 
 	}
 
+function logout(){
+			window.localStorage.removeItem("userinfo");
+
+			var url = '../pages/login.html';
+			window.location.href=url;
+
+		}

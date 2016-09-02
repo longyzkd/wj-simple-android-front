@@ -60,7 +60,7 @@
 	<div role="main" class="ui-content ">
 
 
-		<table data-role="table" id="table-yzz-info1" data-mode="reflow" class="ui-responsive">
+		<!--<table data-role="table" id="table-yzz-info1" data-mode="reflow" class="ui-responsive">
 				<thead>
 				<tr >
 					<th >上游水位</th>
@@ -74,8 +74,9 @@
 				<tbody>
 
 				</tbody>
-			</table>
-
+			</table>-->
+		<ul data-role="listview" data-inset="true" data-divider-theme="b"  id="table-yzz-info1" >
+		</ul>
 
 
 
@@ -111,6 +112,7 @@
 	}
 
 	$(function() {
+			validUser();
 			renderSw();
 	});
 
@@ -141,6 +143,7 @@
 	}
 
 	function loadYzzSwData(result){
+		/*
 		if (result != undefined) {
 			var $tbody1 = $('#table-yzz-info1 tbody');
 			$tbody1.html('');
@@ -150,6 +153,23 @@
 			//$tbody1.append(html);
 				$tbody1.append(html).closest( "table#table-yzz-info1" )
 				.table( "refresh" )
+				// Trigger if the new injected markup contain links or buttons that need to be enhanced
+				.trigger( "create" );
+		}
+		*/
+
+		if (result != undefined) {
+			var $tbody2 = $('#table-yzz-info1');
+			$tbody2.html('');
+			var html2 = '';
+			var baseInfo = result.baseInfo;
+			html2 += '<li data-role="list-divider" >上闸首开度<p class="ui-li-aside"><strong>'+baseInfo.sw1+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >节制闸中孔开度<p class="ui-li-aside"><strong>'+baseInfo.sw2+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >节制闸北边孔开度<p class="ui-li-aside"><strong>'+baseInfo.sw3+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >节制闸南边孔开度<p class="ui-li-aside"><strong>'+ '-'+'</strong></p></li>';
+
+			$tbody2.append(html2)
+				.listview( "refresh" )
 				// Trigger if the new injected markup contain links or buttons that need to be enhanced
 				.trigger( "create" );
 		}

@@ -36,3 +36,9 @@
 background:  url("img/sw.png")50% 50% no-repeat;
 background-size: 18px 26px;
 }
+
+/*
+body {
+  font-size: 18px; // You can even use !important
+}
+*/

@@ -65,7 +65,7 @@
 			   data-column-btn-theme="b"
 			   data-column-popup-theme="a">-->
 
-		<table data-role="table" id="table-yzz-zmkd" data-mode="reflow" class="ui-responsive">
+		<!--<table data-role="table" id="table-yzz-zmkd" data-mode="reflow" class="ui-responsive">
 			<thead>
 			<tr class="ui-bar-d">
 				<th >上闸首开度</th>
@@ -82,15 +82,17 @@
 				<th data-priority="6">下闸首小孔门开度2</th>
 				<th data-priority="6">上闸首小孔门开度1</th>
 				<th data-priority="6">上闸首小孔门开度2</th>
-				<!--<th data-priority="6">日期</th>-->
+				&lt;!&ndash;<th data-priority="6">日期</th>&ndash;&gt;
 
 			</tr>
 			</thead>
 			<tbody>
 
 			</tbody>
-		</table>
+		</table>-->
 
+		<ul data-role="listview" data-inset="true" data-divider-theme="b"  id="table-yzz-zmkd" >
+		</ul>
 
 
 
@@ -125,6 +127,7 @@
 	}
 
 	window.onload = function(){
+			validUser();
 			renderKd();
 	}
 	/*
@@ -161,7 +164,7 @@
 	}
 
 	function loadYzzKdData(result){
-
+		/*
 		if (result != undefined) {
 			var $tbody2 = $('#table-yzz-zmkd tbody');
 			$tbody2.html('');
@@ -172,6 +175,34 @@
 			//$tbody2.append(html2);
 			$tbody2.append(html2).closest( "table#table-yzz-zmkd" )
 				.table( "refresh" )
+				// Trigger if the new injected markup contain links or buttons that need to be enhanced
+				.trigger( "create" );
+		}
+		*/
+
+		if (result != undefined) {
+			var $tbody2 = $('#table-yzz-zmkd');
+			$tbody2.html('');
+			var html2 = '';
+			var zmkd = result.zmkd;
+			html2 += '<li data-role="list-divider" >上闸首开度<p class="ui-li-aside"><strong>'+zmkd.zm1+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >节制闸中孔开度<p class="ui-li-aside"><strong>'+zmkd.zm2+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >节制闸北边孔开度<p class="ui-li-aside"><strong>'+zmkd.zm3+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >节制闸南边孔开度<p class="ui-li-aside"><strong>'+zmkd.zm4+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >盐亭子闸开度1<p class="ui-li-aside"><strong>'+zmkd.zm5+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >盐亭子闸开度2<p class="ui-li-aside"><strong>'+zmkd.zm6+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >导流涵洞开度1<p class="ui-li-aside"><strong>'+zmkd.zm7+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >导流涵洞开度2<p class="ui-li-aside"><strong>'+zmkd.zm8+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >下闸首液压门开度1<p class="ui-li-aside"><strong>'+zmkd.zm9+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >下闸首液压门开度2<p class="ui-li-aside"><strong>'+zmkd.zm10+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >下闸首小孔门开度1<p class="ui-li-aside"><strong>'+zmkd.zm11+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >下闸首小孔门开度2<p class="ui-li-aside"><strong>'+zmkd.zm12+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >上闸首小孔门开度1<p class="ui-li-aside"><strong>'+zmkd.zm13+'</strong></p></li>';
+			html2 += '<li data-role="list-divider" >上闸首小孔门开度2<p class="ui-li-aside"><strong>'+zmkd.zm14+'</strong></p></li>';
+			//html2 += '<li data-role="list-divider" >日期<p class="ui-li-aside"><strong>'+zmkd.datetime+'</strong></p></li>';
+
+			$tbody2.append(html2)
+				.listview( "refresh" )
 				// Trigger if the new injected markup contain links or buttons that need to be enhanced
 				.trigger( "create" );
 		}
