@@ -45,6 +45,7 @@
 			<ul>
 				<li><a href="index.html" data-icon="home" class="ui-btn-active"  rel="external">扬州水情</a></li>
 				<li><a href="zha.html" data-icon="eye"  rel="external">扬州闸</a></li>
+				<li><a href="linearChart.html" data-icon="eye"  rel="external">曲线图</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /footer -->
@@ -59,12 +60,12 @@
 <script type="text/javascript">
 	setInterval(refresh, interval);
 	function refresh (){
-			renderOne();//水情数据
+		//	renderOne();//水情数据
 	}
 
 	$(function() {
-		if(true){
-		//if(validUser()){
+		//if(true){
+		if(validUser()){
 			renderOne();
 
 		}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tabs - jQuery Mobile Demos</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" href="../css/themes/default/yzsl.css">
+	<link rel="stylesheet" href="../css/themes/default/jquery.mobile.icons-1.4.5.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<link rel="stylesheet" href="../css/my.css">
+
+	<script src="../js/jquery.js"></script>
+	<script src="../_assets/js/index.js"></script>
+	<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="../js/common.js"></script>
+
+<!-- 曲线-->
+	<link rel="stylesheet" type="text/css" href="../chart/css/jquery.jqChart.css" />
+	<link rel="stylesheet" type="text/css" href="../chart/css/jquery.jqRangeSlider.css" />
+	<link rel="stylesheet" type="text/css" href="../chart/themes/smoothness/jquery-ui-1.10.4.css" />
+	<script src="../chart/js/jquery.mousewheel.js" type="text/javascript"></script>
+	<script src="../chart/js/jquery.jqChart.min.js" type="text/javascript"></script>
+	<script src="../chart/js/jquery.jqRangeSlider.min.js" type="text/javascript"></script>
+
+	<style id="">
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading {
+		margin: 0;
+		}
+
+		.ui-li-static.ui-collapsible {
+		padding: 0;
+		}
+
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading > .ui-btn {
+		border-top-width: 0;
+		}
+
+		.ui-li-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-btn,
+		.ui-li-static.ui-collapsible > .ui-collapsible-content {
+		border-bottom-width: 0;
+		}
+	</style>
+</head>
+<body>
+<div data-role="page"  data-quicklinks="true">
+
+	<!--<div data-role="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
+		&lt;!&ndash;<p><span class="jqm-version"></span> Demos</p>&ndash;&gt;
+		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
+		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	</div>&lt;!&ndash; /header &ndash;&gt;-->
+
+	<div data-role="header" data-position="fixed" >
+		<a rel="external" href="zha.html" class="ui-btn-left ui-btn ui-btn-icon-notext ui-icon-back ui-btn-corner-all ui-shadow" title="Home" data-form="ui-icon"> back </a>
+		<h1 class="ui-title" tabindex="0" role="heading" aria-level="1">扬州闸</h1>
+		<a rel="external" href="index.html" class="ui-btn-right ui-btn ui-btn-icon-notext ui-icon-grid ui-btn-corner-all ui-shadow ui-icon-home" title="Home" data-form="ui-icon"> home </a>
+
+		<!-- <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>-->
+	</div>
+
+	<div role="main" class="ui-content ">
+
+
+
+		<!--    根据后台配置现 显示 具体年或月或日 -->
+		<label for="select-choice-a" class="select">最近次数:</label>
+		<select name="select-choice-a" id="select-choice-a" data-native-menu="false">
+			    <option value="10">10</option>
+			    <option value="30">30</option>
+			    <option value="50">50</option>
+			    <option value="100">100</option>
+		</select>
+
+
+
+		<a href="#" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-btn-b ui-mini" onclick='query()'>查询</a>
+
+
+		<div id="jqChart" style="width: 500px; height: 300px;">
+		</div>
+
+
+
+	</div><!-- /content -->
+
+    <div data-role="footer"  data-position="fixed">
+		<div data-role="navbar" data-iconpos="left">
+			<ul>
+				<li><a href="index.html" data-icon="home" rel="external">扬州水情</a></li>
+				<li><a href="zha.html" data-icon="eye"  class="ui-btn-active" rel="external">扬州闸</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+	<!-- 返回顶部 start -->
+	<div style="display:block;" class="back-to" id="toolBackTop">
+		<a title="返回顶部" onclick="window.scrollTo(0,0);return false;" href="#top" class="back-top"></a>
+	</div>
+	<!-- 返回顶部 end -->
+
+
+
+
+</div><!-- /page -->
+
+<script type="text/javascript">
+
+	$(function(){
+		validUser();
+	});
+
+
+	function query(){ //加载曲线
+		var p = $('#select-choice-a').val(); //年、月、日、次数
+
+		var url = getDataUrl+"?service_code=yzzDynamicData&userId="+userId+"&password="+password+"&p="+p;
+
+		 $.ajax({
+                type: "POST",
+                contentType: "application/json",//没什么用
+                dataType:'json', //必须的
+                url: url,
+                beforeSend: function () {
+                    loadingMask();
+                },
+                complete:function(){
+                    hideMask();
+                },
+                success: function (result) {
+				 	$('#table-dynamic').html('');
+					if('sw'===selectType){
+						$('#table-dynamic').append(_template_sw(result,'all'))
+						.table( "refresh" )
+						.trigger( "create" );
+
+					}else if('ll'===selectType){//暂不处理
+						$('#table-dynamic').append(_template_ll(result));
+					}
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(textStatus+'：请联系管理员');
+                 }
+            });
+	}
+
+</script>
+</body>
+</html>
